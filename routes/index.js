@@ -19,15 +19,16 @@ router.get("/:id([0-9][0-9]*)",async  (req, res) => {
       order: [["id", "DESC"]]
     }]
   });
-  let durations = logData.Durations.map(x => x.duration);
-  let fiftyPercentile               = percentile(50, durations);
-  let seventyFivePercentile   = percentile( 75, durations);
-  let ninetyFivePercentile    = percentile( 95, durations);
-  let ninetyNinePercentile    = percentile( 99, durations);
   let msg = {
     status: (logData != null)
   }
   if(msg.status){
+
+    let durations = logData.Durations.map(x => x.duration);
+    let fiftyPercentile               = percentile(50, durations);
+    let seventyFivePercentile   = percentile( 75, durations);
+    let ninetyFivePercentile    = percentile( 95, durations);
+    let ninetyNinePercentile    = percentile( 99, durations);
     msg["_id"] = logData.id;
     msg["responses"] = durations.slice(0,100);
     msg["50th_percentile"] = fiftyPercentile;
@@ -50,8 +51,14 @@ router.post("/", async (req, res) => {
 });
 router.put("/:id([0-9][0-9]*)", async (req, res) => {
   await models.Website.update(req.body, {where: { url: req.params.id}});
+  res.send({success: true, _id: req.params.id})
 });
-router.delete("/:id([0-9][0-9]*)", (req, res) => {
-
+router.delete("/:id([0-9][0-9]*)", async (req, res) => {
+  await models.Website.destroy({
+    where: {
+      id: req.params.id
+    }
+  });
+  res.send({success: true})
 });
 module.exports = router;

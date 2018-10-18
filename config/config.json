@@ -1,8 +1,8 @@
 {
   "development": {
-    "username": "root",
-    "password": "Ratuldb123",
-    "database": "urlmonitor",
+    "username": "dev",
+    "password": "123",
+    "database": "webmonitor-dev",
     "host": "localhost",
     "dialect": "mysql"
   },
