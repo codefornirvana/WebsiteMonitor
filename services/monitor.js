@@ -13,7 +13,11 @@ async function pingEndpoint(websiteId, runnerReference){
     return false;
   }
   console.log(JSON.stringify(websiteObj));
-  return request.get({url: "https://"+websiteObj.url, time: true}, function(err, response){
+  return request.[websiteObj.method.toLowerCase()]({
+    url: "https://"+websiteObj.url, 
+    headers: websiteObj.headers,  
+    body: websiteObj.data,
+    time: true}, function(err, response){
     if(err){
       console.log(err);
       return false;
