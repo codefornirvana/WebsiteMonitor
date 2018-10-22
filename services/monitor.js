@@ -32,6 +32,6 @@ async function pingEndpoint(websiteId, runnerReference){
       console.log("Record is already deleted ... ");
     }
     console.log("Pinged the endpoint");
-    console.log("Reponse time => "+response.elapsedTime);
+    console.log("Response time => "+response.elapsedTime);
   });
 }
