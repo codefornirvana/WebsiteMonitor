@@ -1,8 +1,8 @@
 {
   "development": {
     "username": "dev",
-    "password": "123",
-    "database": "webmonitor-dev",
+    "password": "Data123",
+    "database": "webmonitor",
     "host": "localhost",
     "dialect": "mysql"
   },

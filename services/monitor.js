@@ -13,19 +13,24 @@ async function pingEndpoint(websiteId, runnerReference){
     return false;
   }
   console.log(JSON.stringify(websiteObj));
-  return request.[websiteObj.method.toLowerCase()]({
+  return request[websiteObj.method.toLowerCase()]({
     url: "https://"+websiteObj.url, 
     headers: websiteObj.headers,  
     body: websiteObj.data,
-    time: true}, function(err, response){
+    time: true}, async function(err, response){
     if(err){
       console.log(err);
       return false;
     }
-    models.Duration.create({
-      WebsiteId: websiteObj.id,
-      duration: response.elapsedTime
-    });
+    try{
+      await models.Duration.create({
+        WebsiteId: websiteObj.id,
+        duration: response.elapsedTime
+      });
+    }
+    catch(e){
+      console.log("Record is already deleted ... ");
+    }
     console.log("Pinged the endpoint");
     console.log("Reponse time => "+response.elapsedTime);
   });

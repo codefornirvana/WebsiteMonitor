@@ -1,5 +1,6 @@
 var express = require('express');
 var path = require('path');
+var db = require("./models")
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
@@ -13,4 +14,5 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use('/', indexRouter);
+db.sequelize.sync();
 module.exports = app;

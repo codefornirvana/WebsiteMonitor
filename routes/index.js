@@ -11,7 +11,7 @@ router.get("/", async (req, res) => {
     attributes: [["id","_id"], "url", "method", "data", "headers"]
   })});
 });
-router.get("/:id([0-9][0-9]*)",async  (req, res) => {
+router.get("/:id([0-9]+)",async  (req, res) => {
   console.log("recieved in regex");
   let logData = await models.Website.findById(req.params.id,{
     include: [{
@@ -49,16 +49,18 @@ router.post("/", async (req, res) => {
   monitorService.monitor(newWebsite.id);
   res.send({success: true, _id: newWebsite.id});
 });
-router.put("/:id([0-9][0-9]*)", async (req, res) => {
+router.put("/:id([0-9]+)", async (req, res) => {
   await models.Website.update(req.body, {where: { url: req.params.id}});
   res.send({success: true, _id: req.params.id})
 });
-router.delete("/:id([0-9][0-9]*)", async (req, res) => {
-  await models.Website.destroy({
+router.delete("/:id([0-9]+)", async (req, res) => {
+  let response = await models.Website.destroy({
     where: {
       id: req.params.id
     }
   });
-  res.send({success: true})
+  let deleteResponse = {};
+  deleteResponse.success = response > 0;
+  res.send(deleteResponse);
 });
 module.exports = router;

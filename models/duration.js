@@ -9,7 +9,9 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     Duration.belongsTo(models.Website, {
       foreignKey: "WebsiteId",
-      sourceKey:  "id"
+      sourceKey:  "id",
+      foreignKeyConstraint: true,
+      onDelete: 'cascade'
     });
   };
   return Duration;
